@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Keyfire</title>
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob: skmusic:; connect-src 'self'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <img class="logo" src="../assets/logo.svg" alt="" width="36" height="36">
+    <div>
+      <h1>Keyfire</h1>
+      <p>Give every keystroke a voice</p>
+    </div>
+  </div>
+  <div class="topRight">
+    <span class="statusPill" id="pill" data-state="on"><i class="led"></i><span id="pillText">Active</span></span>
+    <button id="power" class="powerBtn" aria-pressed="true" aria-label="Pause sounds" title="Pause or resume">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v8"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" id="t-play" data-tab="play" aria-controls="page-play" aria-selected="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></svg>Play
+  </button>
+  <button class="tab" role="tab" id="t-sounds" data-tab="sounds" aria-controls="page-sounds" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></svg>Sounds
+  </button>
+  <button class="tab" role="tab" id="t-atmosphere" data-tab="atmosphere" aria-controls="page-atmosphere" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.6-7.96A5.5 5.5 0 0 1 17 9.5a4.25 4.25 0 0 1 0 8.5z"/></svg>Atmosphere
+  </button>
+  <button class="tab" role="tab" id="t-focus" data-tab="focus" aria-controls="page-focus" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5M9 3h6"/></svg>Focus
+  </button>
+  <button class="tab" role="tab" id="t-automation" data-tab="automation" aria-controls="page-automation" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Automation
+  </button>
+  <button class="tab" role="tab" id="t-appearance" data-tab="appearance" aria-controls="page-appearance" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.8 0-1.6-1.2-1.7-1.2-3 0-1 .8-1.7 1.9-1.7H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/></svg>Appearance
+  </button>
+  <button class="tab" role="tab" id="t-settings" data-tab="settings" aria-controls="page-settings" aria-selected="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Settings
+  </button>
+</nav>
+
+<div id="note" role="status" aria-live="polite" hidden></div>
+<div id="dropHint" hidden>Drop a keyboard pack folder or .zip to add it</div>
+
+<main id="pages">
+
+  <!-- Play -->
+  <section class="page" id="page-play" role="tabpanel" aria-labelledby="t-play">
+    <div class="card hero">
+      <div id="shell" class="shell" aria-hidden="true">
+        <span class="flash"></span>
+        <svg viewBox="0 0 120 180">
+          <defs>
+            <linearGradient id="hull" x1="0" x2="1">
+              <stop offset="0" stop-color="#651f1b"/><stop offset=".42" stop-color="#b8463e"/><stop offset="1" stop-color="#521a17"/>
+            </linearGradient>
+            <linearGradient id="brass" x1="0" x2="1">
+              <stop offset="0" stop-color="#7d6029"/><stop offset=".38" stop-color="#ecca85"/><stop offset="1" stop-color="#6f5424"/>
+            </linearGradient>
+          </defs>
+          <path d="M24 30 Q24 12 42 12 H78 Q96 12 96 30 V118 H24 Z" fill="url(#hull)"/>
+          <path d="M36 12v12M48 12v14M60 12v15M72 12v14M84 12v12" stroke="#3b1210" stroke-opacity=".55" stroke-width="2.4" stroke-linecap="round"/>
+          <rect x="24" y="112" width="72" height="8" fill="#3b1210" opacity=".35"/>
+          <rect x="18" y="118" width="84" height="52" rx="9" fill="url(#brass)"/>
+          <rect x="18" y="118" width="84" height="7" rx="3.5" fill="#f6e0a8" opacity=".55"/>
+          <circle cx="60" cy="148" r="15" fill="none" stroke="#5c4519" stroke-width="2"/>
+          <circle cx="60" cy="148" r="7" fill="#5c4519"/>
+        </svg>
+      </div>
+      <div class="heroText">
+        <h2 id="status">Firing on every key</h2>
+        <p class="sub"><span id="muteName">F9</span> pauses and resumes from anywhere.</p>
+        <div class="tiles">
+          <div class="tile"><b id="count">0</b><span>Shots this session</span></div>
+          <div class="tile"><b id="wpm">0</b><span>WPM now</span></div>
+          <div class="tile"><b id="best">0</b><span>Best WPM</span></div>
+          <div class="tile"><b id="total">0</b><span>Shots all time</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Mix</h3></div>
+      <div class="sliders">
+        <div class="ctl">
+          <label for="vol">Volume</label><output id="volOut"></output>
+          <span class="desc">Above 100% boosts the sound.</span>
+          <input id="vol" type="range" min="0" max="150" step="1">
+        </div>
+        <div class="ctl">
+          <label for="dyn">Dynamics</label><output id="dynOut"></output>
+          <span class="desc">Varies how hard each key hits.</span>
+          <input id="dyn" type="range" min="0" max="100" step="1">
+        </div>
+        <div class="ctl">
+          <label for="room">Room echo</label><output id="roomOut"></output>
+          <span class="desc">Adds space around the sound.</span>
+          <input id="room" type="range" min="0" max="100" step="1">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead">
+        <h3>Scenes</h3>
+        <button class="pill" id="saveSceneBtn" aria-expanded="false">Save current mix</button>
+      </div>
+      <form id="sceneForm" class="sceneForm" hidden>
+        <input id="sceneName" type="text" maxlength="32" placeholder="Name this scene" aria-label="Scene name">
+        <button class="pill solid" type="submit">Save scene</button>
+      </form>
+      <div id="scenes" class="scenes" role="radiogroup" aria-label="Scenes"></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Try it</h3></div>
+      <textarea id="try" rows="2" placeholder="Type here to hear your sound"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Achievements</h3><span class="muted" id="achCount"></span></div>
+      <div id="ach" class="chips"></div>
+    </div>
+  </section>
+
+  <!-- Sounds -->
+  <section class="page" id="page-sounds" role="tabpanel" aria-labelledby="t-sounds" hidden>
+    <div class="card">
+      <div class="cardHead">
+        <h3>Your sounds</h3>
+        <div class="menuWrap">
+          <button class="pill solid" id="addBtn" aria-haspopup="true" aria-expanded="false">Add</button>
+          <div class="menu" id="menu" hidden>
+            <button data-kind="zip">Keyboard pack (.zip)</button>
+            <button data-kind="folder">Keyboard pack folder</button>
+            <button data-kind="sounds">Sound files (.ogg, .wav, .mp3, .mpeg, .m4a)</button>
+          </div>
+        </div>
+      </div>
+      <p class="lead">Pick what every key sounds like. You can also drop a pack folder or .zip anywhere on the window.</p>
+      <div id="packs" role="radiogroup" aria-label="Sound"></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Tone</h3><span class="muted" id="toneFor"></span></div>
+      <p class="lead">Shape the current sound. Each sound keeps its own settings.</p>
+      <div class="sliders wrap">
+        <div class="ctl"><label for="toneBass">Bass</label><output id="toneBassOut"></output><input id="toneBass" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="tonePresence">Presence</label><output id="tonePresenceOut"></output><input id="tonePresence" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="toneTreble">Treble</label><output id="toneTrebleOut"></output><input id="toneTreble" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="tonePitch">Pitch</label><output id="tonePitchOut"></output><input id="tonePitch" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="toneWidth">Stereo width</label><output id="toneWidthOut"></output><input id="toneWidth" type="range" min="0" max="150" step="5"></div>
+      </div>
+      <div class="cardFoot"><button class="pill" id="toneReset">Reset tone</button></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Typing feel</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Loudness follows typing speed</div><div class="rowDesc">Fast bursts can get softer or harder, like a real keyboard under your hands.</div></div>
+        <select id="intMode" aria-label="Loudness follows typing speed">
+          <option value="off">Off</option>
+          <option value="softer">Fast typing is softer</option>
+          <option value="harder">Fast typing is harder</option>
+        </select>
+      </div>
+      <div class="ctl slim"><label for="intAmt">Amount</label><output id="intAmtOut"></output><input id="intAmt" type="range" min="0" max="100" step="5"></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Mouse and scroll</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Mouse clicks</div><div class="rowDesc">Left, right and middle clicks.</div></div>
+        <label class="switch"><input type="checkbox" id="mouse" aria-label="Mouse clicks"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Click sound</div></div>
+        <select id="mousePack" aria-label="Mouse click sound"></select>
+      </div>
+      <div class="ctl slim"><label for="mouseVol">Click volume</label><output id="mouseVolOut"></output><input id="mouseVol" type="range" min="0" max="100" step="1"></div>
+      <div class="row">
+        <div><div class="rowTitle">Scroll and trackpad</div><div class="rowDesc">A light tick as you scroll.</div></div>
+        <label class="switch"><input type="checkbox" id="scrollOn" aria-label="Scroll sounds"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Scroll sound</div></div>
+        <select id="scrollPack" aria-label="Scroll sound"></select>
+      </div>
+      <div class="ctl slim"><label for="scrollVol">Scroll volume</label><output id="scrollVolOut"></output><input id="scrollVol" type="range" min="0" max="100" step="1"></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Keyboard</h3></div>
+      <p class="lead">Keys light up as you type. Click a key to give it a sound of its own.</p>
+      <div id="osk" class="osk" aria-label="On-screen keyboard"></div>
+      <div id="ovPanel" class="row" hidden>
+        <div><div class="rowTitle" id="ovTitle">Key</div><div class="rowDesc">Sound for this key</div></div>
+        <select id="ovPack" aria-label="Sound for this key"></select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Atmosphere -->
+  <section class="page" id="page-atmosphere" role="tabpanel" aria-labelledby="t-atmosphere" hidden>
+    <div class="card">
+      <div class="cardHead">
+        <h3>Ambience</h3>
+        <div class="chips"><button class="pill" id="addLayer">Add a layer</button><button class="pill" id="addAmb">Add your own</button></div>
+      </div>
+      <div id="amb" class="chips" role="radiogroup" aria-label="Ambience"></div>
+      <div id="layers"></div>
+      <div class="ctl slim">
+        <label for="ambVol">Ambience volume</label><output id="ambOut"></output>
+        <input id="ambVol" type="range" min="0" max="100" step="1">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Reactive ambience</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Follow my typing</div><div class="rowDesc">Fast typing brightens and swells the ambience. It relaxes when you stop.</div></div>
+        <label class="switch"><input type="checkbox" id="reactOn" aria-label="Reactive ambience"><span></span></label>
+      </div>
+      <div id="reactBody">
+        <div class="meter" aria-hidden="true"><i id="reactMeter"></i></div>
+        <div class="sliders wrap">
+          <div class="ctl"><label for="reactSens">Sensitivity</label><output id="reactSensOut"></output><span class="desc">How easily typing triggers it.</span><input id="reactSens" type="range" min="0" max="100" step="1"></div>
+          <div class="ctl"><label for="reactSwell">Swell</label><output id="reactSwellOut"></output><span class="desc">How much the bed grows and brightens.</span><input id="reactSwell" type="range" min="0" max="100" step="1"></div>
+          <div class="ctl"><label for="reactDuck">Ducking</label><output id="reactDuckOut"></output><span class="desc">How far it drops under your keys.</span><input id="reactDuck" type="range" min="0" max="100" step="1"></div>
+        </div>
+        <div class="row">
+          <div><div class="rowTitle">Thunder on Enter</div><div class="rowDesc">A storm bed cracks after a burst of typing, then Enter.</div></div>
+          <label class="switch"><input type="checkbox" id="reactThunder" aria-label="Thunder on Enter"><span></span></label>
+        </div>
+      </div>
+      <p class="lead foot">Scenes can turn this on or off. Storm and Rainy desk use it.</p>
+    </div>
+
+    <div class="card">
+      <div class="cardHead">
+        <h3>Music</h3>
+        <button class="pill" id="addMusic">Add tracks</button>
+      </div>
+      <div id="tracks" class="chips" role="radiogroup" aria-label="Music"></div>
+      <div class="row">
+        <div><div class="rowTitle" id="nowPlaying">Nothing playing</div><div class="rowDesc">Plays under your key sounds.</div></div>
+        <div class="chips">
+          <button class="pill" id="musicToggle">Play</button>
+          <button class="pill" id="musicNext">Next</button>
+          <button class="pill" id="musicShuffle" aria-pressed="false">Shuffle</button>
+        </div>
+      </div>
+      <div class="ctl slim">
+        <label for="musicVol">Music volume</label><output id="musicOut"></output>
+        <input id="musicVol" type="range" min="0" max="100" step="1">
+      </div>
+    </div>
+  </section>
+
+  <!-- Focus -->
+  <section class="page" id="page-focus" role="tabpanel" aria-labelledby="t-focus" hidden>
+    <div class="card focusCard">
+      <div class="ringWrap" data-phase="work">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="ringBg" cx="100" cy="100" r="88"/>
+          <circle class="ringFg" id="focusRing" cx="100" cy="100" r="88"/>
+        </svg>
+        <div class="ringText">
+          <div class="focusTime" id="focusTime">25:00</div>
+          <div class="focusPhase" id="focusPhase">Focus</div>
+          <div class="muted" id="focusRound"></div>
+        </div>
+      </div>
+      <div class="focusSide">
+        <div class="focusBtns">
+          <button class="pill solid big" id="focusToggle">Start</button>
+          <button class="pill" id="focusSkip">Skip</button>
+          <button class="pill" id="focusReset">Reset</button>
+        </div>
+        <div class="tiles three">
+          <div class="tile"><b id="focusToday">0</b><span>Sessions today</span></div>
+          <div class="tile"><b id="focusMins">0</b><span>Focus minutes today</span></div>
+          <div class="tile"><b id="focusAll">0</b><span>Sessions all time</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Lengths</h3></div>
+      <div class="lengths">
+        <label>Focus<span class="num"><input id="f-work" type="number" min="1" max="180"> min</span></label>
+        <label>Short break<span class="num"><input id="f-short" type="number" min="1" max="180"> min</span></label>
+        <label>Long break<span class="num"><input id="f-long" type="number" min="1" max="180"> min</span></label>
+        <label>Long break every<span class="num"><input id="f-every" type="number" min="1" max="12"> sessions</span></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Scenes</h3></div>
+      <p class="lead">Switch the sound and ambience for each stretch. Reset returns you to the scene you started from.</p>
+      <div class="row first"><div class="rowTitle">Focus</div><select id="f-workScene" aria-label="Scene for focus"></select></div>
+      <div class="row"><div class="rowTitle">Short break</div><select id="f-shortScene" aria-label="Scene for short breaks"></select></div>
+      <div class="row"><div class="rowTitle">Long break</div><select id="f-longScene" aria-label="Scene for long breaks"></select></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Behavior</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Start the next stretch automatically</div></div>
+        <label class="switch"><input type="checkbox" id="f-auto" aria-label="Start the next stretch automatically"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Soft chime</div><div class="rowDesc">A short bell when a stretch ends.</div></div>
+        <label class="switch"><input type="checkbox" id="f-chime" aria-label="Soft chime"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Notification</div><div class="rowDesc">A Windows notification when a stretch ends.</div></div>
+        <label class="switch"><input type="checkbox" id="f-notify" aria-label="Notification"><span></span></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Automation -->
+  <section class="page" id="page-automation" role="tabpanel" aria-labelledby="t-automation" hidden>
+    <div class="card">
+      <div class="cardHead"><h3>Quiet hours</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Mute on a schedule</div><div class="rowDesc">Everything goes quiet on the days and times you choose.</div></div>
+        <label class="switch"><input type="checkbox" id="quietOn" aria-label="Quiet hours"><span></span></label>
+      </div>
+      <div id="quietRules"></div>
+      <div class="cardFoot"><button class="pill" id="quietAdd">Add a schedule</button></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Stay out of the way</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Mute during calls</div><div class="rowDesc">Mutes while any app is using your microphone.</div></div>
+        <label class="switch"><input type="checkbox" id="muteCall" aria-label="Mute during calls"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Mute in fullscreen apps</div><div class="rowDesc">Keeps games and videos clean.</div></div>
+        <label class="switch"><input type="checkbox" id="muteFull" aria-label="Mute in fullscreen apps"><span></span></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>App rules</h3></div>
+      <p class="lead">Mute a specific app, or switch to a scene while it is in front.</p>
+      <div id="profiles"></div>
+      <div class="addRule">
+        <select id="profApp" aria-label="App"></select>
+        <select id="profAct" aria-label="Action"></select>
+        <button class="pill solid" id="profAdd">Add rule</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appearance -->
+  <section class="page" id="page-appearance" role="tabpanel" aria-labelledby="t-appearance" hidden>
+    <div class="card">
+      <div class="cardHead"><h3>Mode</h3></div>
+      <p class="lead">Light for bright rooms, dark for everything else, or follow Windows.</p>
+      <div id="modes" class="chips" role="radiogroup" aria-label="Mode"></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Accent color</h3><span class="hex" id="accentHex"></span></div>
+      <p class="lead">Used for buttons, sliders and highlights. The last swatch opens a color picker.</p>
+      <div id="accents" class="swatches" role="radiogroup" aria-label="Accent color"></div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Backgrounds</h3></div>
+      <div class="subhead">Dark</div>
+      <div id="darkBgs" class="swatches" role="radiogroup" aria-label="Dark backgrounds"></div>
+      <div class="subhead">Light</div>
+      <div id="lightBgs" class="swatches" role="radiogroup" aria-label="Light backgrounds"></div>
+      <div class="cardFoot"><button class="pill" id="themeReset">Reset appearance</button></div>
+    </div>
+  </section>
+
+  <!-- Settings -->
+  <section class="page" id="page-settings" role="tabpanel" aria-labelledby="t-settings" hidden>
+    <div class="card">
+      <div class="cardHead"><h3>General</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Start with Windows</div><div class="rowDesc">Opens quietly in the tray at sign-in.</div></div>
+        <label class="switch"><input type="checkbox" id="login" aria-label="Start with Windows"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Keep running in the tray</div><div class="rowDesc">Closing the window keeps the sounds going.</div></div>
+        <label class="switch"><input type="checkbox" id="tray" aria-label="Keep running in the tray"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Pause hotkey</div><div class="rowDesc" id="hotkeyDesc">Works from any app.</div></div>
+        <button class="pill" id="hotkeyBtn">Change</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Typing</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Key release sounds</div><div class="rowDesc">Plays the lift sound when a keyboard pack has one.</div></div>
+        <label class="switch"><input type="checkbox" id="release" aria-label="Key release sounds"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Full-auto mode</div><div class="rowDesc">Fast typing fires tighter shots, and pausing after a burst racks the pump.</div></div>
+        <label class="switch"><input type="checkbox" id="fullAuto" aria-label="Full-auto mode"><span></span></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Audio output</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Output device</div><div class="rowDesc">Sounds, ambience and music all follow this.</div></div>
+        <select id="outDev" aria-label="Output device"></select>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Remember volume for each device</div><div class="rowDesc" id="devName">Playing on the system default</div></div>
+        <label class="switch"><input type="checkbox" id="perDevice" aria-label="Remember volume for each device"><span></span></label>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Test sound</div><div class="rowDesc">No sound here means the output device, not the keys.</div></div>
+        <button class="pill" id="testSound">Play</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Library</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Recorded shotgun kit</div><div class="rowDesc">Drop files named blast-, boom-, pump- or shell- here to replace the bundled recordings.</div></div>
+        <button class="pill" id="openKit">Open kit folder</button>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Your files</div><div class="rowDesc">Packs, sounds, ambience and music live in the app data folder.</div></div>
+        <button class="pill" id="openFolder">Open folder</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardHead"><h3>Health</h3></div>
+      <div class="row first">
+        <div><div class="rowTitle">Key hook</div><div class="rowDesc" id="hHook">Checking</div></div>
+        <button class="pill" id="hookRestart">Restart</button>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Audio</div><div class="rowDesc" id="hAudio">Checking</div></div>
+      </div>
+      <div class="row">
+        <div><div class="rowTitle">Last key to sound</div><div class="rowDesc" id="hLat">Press a key</div></div>
+      </div>
+    </div>
+
+    <div class="card about">
+      <img src="../assets/logo.svg" alt="" width="48" height="48">
+      <div>
+        <div class="aboutName">Keyfire</div>
+        <div class="rowDesc">Give every keystroke a voice. Shotgun kits, keyboard packs, ambience and music for Windows.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "rain-recorded",
+    "file": "rain-recorded.ogg",
+    "name": "Rain, recorded",
+    "blurb": "Steady rain, real recording."
+  },
+  {
+    "id": "storm",
+    "file": "rain-recorded.ogg",
+    "name": "Storm, recorded",
+    "blurb": "Rain with distant thunder rolling in.",
+    "thunder": "thunder.ogg"
+  },
+  {
+    "id": "highway",
+    "file": "highway.ogg",
+    "name": "Distant highway",
+    "blurb": "Traffic hush from a few blocks away."
+  },
+  {
+    "id": "running-water",
+    "file": "running-water.ogg",
+    "name": "Running water",
+    "blurb": "A brook or fountain, looped."
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "name": "keyfire",
+  "productName": "Keyfire",
+  "version": "1.0.0",
+  "description": "Give every keystroke a voice. Shotgun kits, mechanical keyboard packs, ambience and music for Windows.",
+  "main": "main.js",
+  "author": "Muhammad Vahaj",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "dependencies": {
+    "active-win": "^8.2.1",
+    "extract-zip": "^2.0.1",
+    "uiohook-napi": "^1.5.5"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.vahaj.keyfire",
+    "productName": "Keyfire",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "context.js",
+      "preload.js",
+      "renderer/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "**/node_modules/uiohook-napi/**",
+      "**/node_modules/active-win/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Keyfire"
+    }
+  }
+}

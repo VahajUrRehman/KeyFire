@@ -1,0 +1,23 @@
+/* Tokens, reset and type. Walnut and brass; serif headings, Segoe UI body. */
+:root{
+  /* Colors are set at runtime from the saved theme (renderer/themes.js); these are the first-paint defaults. */
+  --bg:#0e1420; --surface:#151d2c; --raise:#1d283b; --ink:#e6ecf7; --ink-rgb:230 236 247; --muted:#8c99b0;
+  --brass:#f08a4b; --brass-text:#f08a4b; --brass-deep:#8a5a3a; --brass-ink:#1c140c; --shadow:rgba(0,0,0,.45);
+  --hover:rgb(var(--ink-rgb) / .05); --line:rgb(var(--ink-rgb) / .12);
+  --warn:#e5575f; --ok:#6fbf73; --amber:#e0a84a;
+  --radius:14px;
+  --serif: Constantia, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --sans: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);overflow:hidden}
+body{font:14px/1.5 var(--sans);-webkit-user-select:none;user-select:none;display:flex;flex-direction:column}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:6px}
+button{font-family:inherit}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:600}
+p{margin:0}
+.muted{color:var(--muted);font-size:13px}
+[hidden]{display:none !important}
+::-webkit-scrollbar{width:12px}
+::-webkit-scrollbar-thumb{background:rgb(var(--ink-rgb) / .14);border-radius:8px;border:3px solid var(--bg)}
+@media (prefers-reduced-motion:reduce){ .shell.fire svg,.shell.fire .flash{animation:none} *{transition:none !important} }
