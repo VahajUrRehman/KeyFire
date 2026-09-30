@@ -246,9 +246,20 @@ export class Engine {
     // music: a streamed <audio> element (long tracks are never decoded into memory)
     this.musicBus = ctx.createGain();
     this.musicBus.connect(this.master);
+    this.musicSend = ctx.createGain();              // spaciousness: a wash of the room reverb
+    this.musicSend.gain.value = 0;
+    this.musicBus.connect(this.musicSend).connect(this.convolver);
+    this.musicDuck = ctx.createGain();              // loudness trim and stepping aside while you type
+    this.musicDuck.connect(this.musicBus);
+    this.mLow = eq('lowshelf', 180);
+    this.mHigh = eq('highshelf', 7500);
+    this.mSoft = eq('lowpass', 20000, 0.6);
+    this.mLow.connect(this.mHigh).connect(this.mSoft).connect(this.musicDuck);
+    this._mTrim = 1;
+    this._mDuck = 0;
     this.music = new Audio();
     this.music.crossOrigin = 'anonymous';
-    ctx.createMediaElementSource(this.music).connect(this.musicBus);
+    ctx.createMediaElementSource(this.music).connect(this.mLow);
 
     // built-in shotgun family
     this.synth = {
@@ -313,6 +324,27 @@ export class Engine {
       });
       setTimeout(() => g.disconnect(), 2200 + i * 300);
     });
+  }
+
+  /** Music profile: bass and treble in dB; soft, space and level as 0..1; see renderer/profiles.js. */
+  setMusicTone({ bass = 0, treble = 0, soft = 0, space = 0, level = 1 } = {}) {
+    const t = this.ctx.currentTime;
+    this.mLow.gain.setTargetAtTime(bass, t, 0.05);
+    this.mHigh.gain.setTargetAtTime(treble, t, 0.05);
+    this.mSoft.frequency.setTargetAtTime(20000 * Math.pow(2500 / 20000, soft), t, 0.05);   // 20 kHz down to 2.5 kHz
+    this.musicSend.gain.setTargetAtTime(space * 0.6, t, 0.1);
+    this._mTrim = level;
+    this._mixMusic();
+  }
+
+  /** 0..1: how far the music steps aside right now (driven by typing). */
+  setMusicDuck(d) {
+    this._mDuck = d;
+    this._mixMusic();
+  }
+
+  _mixMusic() {
+    this.musicDuck.gain.setTargetAtTime(this._mTrim * (1 - this._mDuck * 0.75), this.ctx.currentTime, 0.12);
   }
 
   setMusicVolume(v) { this.musicBus.gain.setTargetAtTime(v * 0.8, this.ctx.currentTime, 0.05); }

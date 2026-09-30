@@ -13,6 +13,7 @@ let lastThunder = 0;
 function apply(now) {
   const r = S.reactive;
   engine.setReactive(r.on ? level : 0, r.on ? r.swell : 0, r.on ? r.duck : 0);
+  engine.setMusicDuck(level * S.music.duck);       // the music profile's "step aside while typing"
   lastApply = now;
 }
 
@@ -23,14 +24,14 @@ function thunder(now) {
 /** Called for every key press (the hot path: a few arithmetic ops and at most one apply per 50 ms). */
 export function feedReactive(now, code) {
   const r = S.reactive;
-  if (!r.on) return;
+  if (!r.on && !S.music.duck) return;              // nothing is listening to the typing level
   const dt = now - lastKey;
   lastKey = now;
   rate = dt > 1500 ? 1 : rate + (1000 / Math.max(dt, 60) - rate) * 0.4;
   const target = Math.min(1, rate / (9 - 6 * r.sens));        // more sensitive: fewer keys per second to reach full
   if (target > level) level = target;
   if (now - lastApply > 50) apply(now);
-  if (code === 28 && r.thunder && burstCount() >= 8) thunder(now);   // Enter after a burst
+  if (r.on && code === 28 && r.thunder && burstCount() >= 8) thunder(now);   // Enter after a burst
 }
 
 function renderReactive() {

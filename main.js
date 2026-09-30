@@ -50,7 +50,7 @@ const DEFAULTS = {
   scene: 'range',
   reverb: { mix: 0.28, seconds: 1.6 },
   ambience: { type: 'wind', volume: 0.35 },
-  music: { volume: 0.5, track: null, playing: false, shuffle: false },
+  music: { volume: 0.5, track: null, playing: false, shuffle: false, profile: 'flat', bass: 0, treble: 0, soft: 0, space: 0, level: 1, duck: 0 },
   customScenes: [],
   releaseSounds: true,
   fullAuto: true,

@@ -156,15 +156,25 @@
 
     <div class="card">
       <div class="cardHead"><h3>Tone</h3><span class="muted" id="toneFor"></span></div>
-      <p class="lead">Shape the current sound. Each sound keeps its own settings.</p>
+      <p class="lead">Pick a profile, or shape the sound yourself. Each sound keeps its own settings.</p>
+      <div id="toneProfiles" class="chips" role="radiogroup" aria-label="Tone profiles"></div>
+      <p class="lead profNote" id="toneProfileNote"></p>
       <div class="sliders wrap">
-        <div class="ctl"><label for="toneBass">Bass</label><output id="toneBassOut"></output><input id="toneBass" type="range" min="-12" max="12" step="1"></div>
-        <div class="ctl"><label for="tonePresence">Presence</label><output id="tonePresenceOut"></output><input id="tonePresence" type="range" min="-12" max="12" step="1"></div>
-        <div class="ctl"><label for="toneTreble">Treble</label><output id="toneTrebleOut"></output><input id="toneTreble" type="range" min="-12" max="12" step="1"></div>
-        <div class="ctl"><label for="tonePitch">Pitch</label><output id="tonePitchOut"></output><input id="tonePitch" type="range" min="-12" max="12" step="1"></div>
-        <div class="ctl"><label for="toneWidth">Stereo width</label><output id="toneWidthOut"></output><input id="toneWidth" type="range" min="0" max="150" step="5"></div>
+        <div class="ctl"><label for="toneBass">Bass</label><output id="toneBassOut"></output><span class="desc">Low thump and body. Up is deeper.</span><input id="toneBass" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="tonePresence">Presence</label><output id="tonePresenceOut"></output><span class="desc">Click and detail. Up is sharper.</span><input id="tonePresence" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="toneTreble">Treble</label><output id="toneTrebleOut"></output><span class="desc">Air and sparkle. Down if harsh.</span><input id="toneTreble" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="tonePitch">Pitch</label><output id="tonePitchOut"></output><span class="desc">Lower sounds bigger and heavier.</span><input id="tonePitch" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="toneWidth">Stereo width</label><output id="toneWidthOut"></output><span class="desc">How far keys spread left and right.</span><input id="toneWidth" type="range" min="0" max="150" step="5"></div>
       </div>
-      <div class="cardFoot"><button class="pill" id="toneReset">Reset tone</button></div>
+      <div class="tryRow">
+        <textarea id="toneTry" rows="2" placeholder="Type here to hear how it sounds"></textarea>
+        <button class="pill solid" id="toneSample">Play a sample</button>
+      </div>
+      <div class="cardFoot btnRow">
+        <button class="pill" id="toneCompare" aria-pressed="false" title="Switch between your tone and the original sound">Compare with original</button>
+        <button class="pill" id="toneReset">Reset tone</button>
+      </div>
+      <p class="lead tip">Tip: change one slider at a time, in small steps, and use Compare often. Louder sounds better at first, so cutting what bothers you beats boosting what you like.</p>
     </div>
 
     <div class="card">
@@ -255,6 +265,18 @@
         <button class="pill" id="addMusic">Add tracks</button>
       </div>
       <div id="tracks" class="chips" role="radiogroup" aria-label="Music"></div>
+      <div class="subhead">Sound profile</div>
+      <div id="musicProfiles" class="chips" role="radiogroup" aria-label="Music sound profile"></div>
+      <p class="lead profNote" id="musicProfileNote"></p>
+      <div class="sliders wrap">
+        <div class="ctl"><label for="musicBass">Bass</label><output id="musicBassOut"></output><span class="desc">The low end.</span><input id="musicBass" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="musicTreble">Treble</label><output id="musicTrebleOut"></output><span class="desc">The high end.</span><input id="musicTreble" type="range" min="-12" max="12" step="1"></div>
+        <div class="ctl"><label for="musicSoft">Softness</label><output id="musicSoftOut"></output><span class="desc">Rolls off the top end.</span><input id="musicSoft" type="range" min="0" max="100" step="1"></div>
+        <div class="ctl"><label for="musicSpace">Spaciousness</label><output id="musicSpaceOut"></output><span class="desc">A wash of room reverb.</span><input id="musicSpace" type="range" min="0" max="100" step="1"></div>
+        <div class="ctl"><label for="musicLevel">Level</label><output id="musicLevelOut"></output><span class="desc">Overall loudness of this profile.</span><input id="musicLevel" type="range" min="30" max="120" step="1"></div>
+        <div class="ctl"><label for="musicDuckAmt">Step aside while typing</label><output id="musicDuckOut"></output><span class="desc">Music dips under your keys.</span><input id="musicDuckAmt" type="range" min="0" max="100" step="1"></div>
+      </div>
+      <div class="cardFoot btnRow"><button class="pill" id="musicCompare" aria-pressed="false" title="Switch between your music profile and the original sound">Compare with original</button></div>
       <div class="row">
         <div><div class="rowTitle" id="nowPlaying">Nothing playing</div><div class="rowDesc">Plays under your key sounds.</div></div>
         <div class="chips">

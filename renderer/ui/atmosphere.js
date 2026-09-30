@@ -1,5 +1,6 @@
 // Atmosphere tab: the ambience bed, extra ambience layers, and music.
-import { sk, engine, S, AMBS, TRACKS, $, el, note, paint, ICON, bindSlider, setSlider, replace, on, render } from './core.js';
+import { sk, engine, S, AMBS, TRACKS, $, el, note, paint, ICON, bindSlider, bindRange, setRange, setSlider, replace, on, render } from './core.js';
+import { MUSIC_PROFILES } from '../profiles.js';
 import { SYNTH_AMBIENCES, forgetAmbience, setAmb, touch } from './library.js';
 
 // ---------------------------------------------------------------- ambience
@@ -132,8 +133,50 @@ function renderMusic() {
   $('#musicShuffle').setAttribute('aria-pressed', S.music.shuffle);
 }
 
+// ------------------------------------------------------------ music profiles
+const MUSIC_SLIDERS = [
+  ['musicBass', 'musicBassOut', 'bass', (v) => `${v > 0 ? '+' : ''}${v} dB`, 1],
+  ['musicTreble', 'musicTrebleOut', 'treble', (v) => `${v > 0 ? '+' : ''}${v} dB`, 1],
+  ['musicSoft', 'musicSoftOut', 'soft', (v) => `${v}%`, 100],
+  ['musicSpace', 'musicSpaceOut', 'space', (v) => `${v}%`, 100],
+  ['musicLevel', 'musicLevelOut', 'level', (v) => `${v}%`, 100],
+  ['musicDuckAmt', 'musicDuckOut', 'duck', (v) => `${v}%`, 100],
+];
+
+// Compare: bypass the profile so you can hear what it does to your track.
+let comparing = false;
+function setMusicCompare(on) {
+  comparing = on;
+  $('#musicCompare').setAttribute('aria-pressed', on);
+  $('#musicCompare').textContent = on ? 'Hearing the original' : 'Compare with original';
+  engine.setMusicTone(on ? {} : S.music);
+}
+
+function renderMusicTone() {
+  if (comparing) setMusicCompare(false);
+  const box = $('#musicProfiles');
+  box.replaceChildren();
+  MUSIC_PROFILES.forEach((p) => {
+    const b = el('button', 'chip', p.name);
+    b.setAttribute('role', 'radio');
+    b.setAttribute('aria-checked', S.music.profile === p.id);
+    b.title = p.note;
+    b.addEventListener('click', () => {
+      Object.assign(S.music, { profile: p.id, bass: p.bass, treble: p.treble, soft: p.soft, space: p.space, level: p.level, duck: p.duck });
+      engine.setMusicTone(S.music);
+      saveMusic();
+      renderMusicTone();
+    });
+    box.append(b);
+  });
+  const cur = MUSIC_PROFILES.find((p) => p.id === S.music.profile);
+  $('#musicProfileNote').textContent = cur ? cur.note : 'Custom: your own settings below.';
+  for (const [id, out, key, fmt, scale] of MUSIC_SLIDERS) setRange(id, out, Math.round(S.music[key] * scale), fmt);
+}
+
 /** Restore the saved track after launch. */
 export function restoreMusic() {
+  engine.setMusicTone(S.music);
   engine.setMusicVolume(S.music.volume);
   if (S.music.track && !TRACKS.includes(S.music.track)) { S.music.track = null; S.music.playing = false; }
   if (!S.music.track) return;
@@ -183,6 +226,12 @@ export function initAtmosphere() {
     saveMusic();
     renderMusic();
   });
+  for (const [id, out, key, fmt, scale] of MUSIC_SLIDERS) {
+    bindRange(id, out, fmt,
+      (v) => { if (comparing) setMusicCompare(false); S.music[key] = v / scale; S.music.profile = 'custom'; engine.setMusicTone(S.music); $('#musicProfileNote').textContent = 'Custom: your own settings below.'; },
+      () => { saveMusic(); renderMusicTone(); });
+  }
+  $('#musicCompare').addEventListener('click', () => setMusicCompare(!comparing));
   $('#musicNext').addEventListener('click', nextTrack);
   $('#musicShuffle').addEventListener('click', () => { S.music.shuffle = !S.music.shuffle; saveMusic(); renderMusic(); });
   $('#addMusic').addEventListener('click', async () => {
@@ -197,6 +246,7 @@ export function initAtmosphere() {
     renderAmbience();
     renderLayers();
     renderMusic();
+    renderMusicTone();
     setSlider('ambVol', 'ambOut', S.ambience.volume);
     setSlider('musicVol', 'musicOut', S.music.volume);
   });

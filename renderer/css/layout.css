@@ -135,3 +135,12 @@
 
 /* the sound list scrolls on its own so the cards below it stay within reach */
 #packs{max-height:340px;overflow-y:auto;margin:0 -6px;padding:0 6px}
+
+/* profiles and the try-it box */
+.profNote{margin:10px 0 14px}
+.tryRow{display:flex;gap:12px;align-items:flex-start;margin-top:16px}
+.tryRow textarea{flex:1}
+.sliders.wrap{margin-top:4px}
+
+.btnRow{display:flex;gap:10px;flex-wrap:wrap}
+.lead.tip{margin:12px 0 0}
