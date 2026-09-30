@@ -444,7 +444,7 @@ function setEnabled(v) {
   settings.enabled = !!v;
   saveSettings();
   refreshTray();
-  win?.webContents.send('enabled', settings.enabled);
+  toUI('enabled', settings.enabled);
 }
 
 // ---------------------------------------------------------------------- IPC
@@ -543,32 +543,41 @@ const keyName = (code) => Object.entries(UiohookKey).find(([, v]) => v === code)
 const health = { hook: false, error: null, restarts: 0 };
 let hookBound = false;
 let hookRetry = null;
-const sendHealth = () => win?.webContents.send('health', health);
+const sendHealth = () => { try { toUI('health', health); } catch {} };
+
+// uiohook-napi calls these handlers from native code. An exception thrown in one aborts the whole process
+// ("FATAL ERROR: tsfn_to_js_proxy napi_call_function"), so every handler is wrapped, and messages to the
+// window go through toUI, which skips a page that is reloading or gone.
+const toUI = (...args) => {
+  const wc = win && !win.isDestroyed() ? win.webContents : null;
+  if (wc && !wc.isDestroyed()) wc.send(...args);
+};
+const safe = (fn) => (e) => { try { fn(e); } catch (err) { logErr('key hook', err); } };
 
 function startHook() {
   if (!hookBound) {
     hookBound = true;
-    uIOhook.on('keydown', (e) => {
+    uIOhook.on('keydown', safe((e) => {
       if (held.has(e.keycode)) return;          // ignore OS key-repeat
       held.add(e.keycode);
       if (capture) { const c = capture; capture = null; return c(e.keycode); }
       if (e.keycode === settings.muteKey) return setEnabled(!settings.enabled);
-      if (live()) win?.webContents.send('key', e.keycode, Date.now());
-    });
-    uIOhook.on('keyup', (e) => {
+      if (live()) toUI('key', e.keycode, Date.now());
+    }));
+    uIOhook.on('keyup', safe((e) => {
       held.delete(e.keycode);
-      if (live() && settings.releaseSounds && e.keycode !== settings.muteKey) win?.webContents.send('keyup', e.keycode);
-    });
+      if (live() && settings.releaseSounds && e.keycode !== settings.muteKey) toUI('keyup', e.keycode);
+    }));
     // button: 1 left, 2 right, 3 middle
-    uIOhook.on('mousedown', (e) => { if (live() && settings.mouse) win?.webContents.send('mouse', e.button, true); });
+    uIOhook.on('mousedown', safe((e) => { if (live() && settings.mouse) toUI('mouse', e.button, true); }));
     let lastWheel = 0;
-    uIOhook.on('wheel', (e) => {                // throttled: a free-spinning wheel fires far faster than a person can hear
+    uIOhook.on('wheel', safe((e) => {           // throttled: a free-spinning wheel fires far faster than a person can hear
       const t = Date.now();
       if (!live() || !settings.scroll.on || t - lastWheel < 45) return;
       lastWheel = t;
-      win?.webContents.send('scroll', e.rotation > 0 ? 1 : -1);
-    });
-    uIOhook.on('mouseup', (e) => { if (live() && settings.mouse && settings.releaseSounds) win?.webContents.send('mouse', e.button, false); });
+      toUI('scroll', e.rotation > 0 ? 1 : -1);
+    }));
+    uIOhook.on('mouseup', safe((e) => { if (live() && settings.mouse && settings.releaseSounds) toUI('mouse', e.button, false); }));
   }
   clearTimeout(hookRetry);
   try {
@@ -609,7 +618,7 @@ if (!app.requestSingleInstanceLock()) {
     Menu.setApplicationMenu(null);
     createWindow();
     if (!headless) buildTray();
-    ctx = createContext(() => settings, (s) => win?.webContents.send('context', s));
+    ctx = createContext(() => settings, (s) => toUI('context', s));
     startHook();
     applyLogin();
     for (const ev of ['resume', 'unlock-screen']) powerMonitor.on(ev, () => setTimeout(restartHook, 1500));

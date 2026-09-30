@@ -9,6 +9,8 @@
   "scripts": {
     "start": "electron .",
     "icons": "node tools/build-icons.js",
+    "perf": "node tools/perf.js",
+    "monitor": "node tools/monitor.js",
     "dist": "electron-builder --win"
   },
   "dependencies": {
