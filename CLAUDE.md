@@ -27,6 +27,9 @@ with scenes, ambience beds, room reverb and a tray icon. Goal: a better product 
   (`play`, `sounds`, `atmosphere`, `automation`, `settings`) plus `stats`, `keyboard-ui`, `tabs`, and `input`
   (the key-press hot path). A tab module exports `initX()` and registers its redraw with `on('render', ...)`.
   State objects are filled in place (`Object.assign`, `replace`), never reassigned.
+- Icons are Lucide, generated into `renderer/icons.js` (only the ones used) by `npm run icons`
+  (`tools/build-icons.js`). Markup: `<i class="ic" data-icon="zap"></i>`; code: `icon('zap')` or `label(btn, 'zap', 'Text')`.
+  No emoji. `lucide-static` is a dev dependency and is not shipped.
 - Styles: `renderer/css/base.css` (tokens), `components.css` (buttons, rows, chips, cards), `layout.css`
   (header, tabs, per-tab layout). Logo: `assets/logo.svg` (also the source of `icon.png` / `icon.ico`).
 

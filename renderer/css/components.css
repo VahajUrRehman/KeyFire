@@ -1,7 +1,7 @@
 /* Reusable pieces: buttons, switches, sliders, chips, rows, selects, cards. */
 
 /* buttons */
-.pill{font:600 13px var(--sans);color:var(--brass-text);background:none;border:1px solid var(--brass-deep);border-radius:999px;padding:6px 16px;cursor:pointer;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:7px;font:600 13px var(--sans);color:var(--brass-text);background:none;border:1px solid var(--brass-deep);border-radius:999px;padding:6px 16px;cursor:pointer;white-space:nowrap}
 .pill:hover{background:color-mix(in srgb, var(--brass) 10%, transparent)}
 .pill:disabled{opacity:.4;cursor:default;background:none}
 .pill.solid{background:var(--brass);color:var(--brass-ink);border-color:var(--brass)}
@@ -98,3 +98,13 @@ textarea:focus,.sceneForm input:focus{outline:none;border-color:var(--brass)}
 .hex{font:600 13px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 .subhead{font-weight:600;margin:16px 0 8px}
 .subhead:first-of-type{margin-top:0}
+
+/* Lucide icons */
+.ico{width:1.15em;height:1.15em;flex:none;vertical-align:-0.2em}
+.ic{display:inline-flex;width:18px;height:18px;flex:none}
+.ic .ico{width:100%;height:100%;vertical-align:0}
+.cardHead h3{display:flex;align-items:center;gap:10px}
+.cardHead h3 .ic{width:20px;height:20px;color:var(--brass-text)}
+.chip{display:inline-flex;align-items:center;gap:7px}
+.icon .ico{width:16px;height:16px;vertical-align:0}
+.pill .ic{width:16px;height:16px}

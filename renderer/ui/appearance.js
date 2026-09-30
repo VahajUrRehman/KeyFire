@@ -1,6 +1,6 @@
 // Appearance tab: light or dark, background palettes, accent colors and a color picker.
 import { ACCENTS, DARK, DEFAULT_THEME, LIGHT, isHex, resolveTheme } from '../themes.js';
-import { sk, S, $, el, on } from './core.js';
+import { sk, S, $, el, on, icon } from './core.js';
 
 const media = matchMedia('(prefers-color-scheme: dark)');
 
@@ -15,7 +15,7 @@ export function applyTheme() {
 
 const save = () => { sk.patch({ theme: S.theme }); applyTheme(); renderAppearance(); };
 
-const MODES = [['dark', 'Dark'], ['light', 'Light'], ['auto', 'Match Windows']];
+const MODES = [['dark', 'Dark', 'moon'], ['light', 'Light', 'sun'], ['auto', 'Match Windows', 'monitor']];
 
 function swatchRow(box, palettes, key, customKey) {
   box.replaceChildren();
@@ -51,8 +51,9 @@ function renderAppearance() {
 
   const modes = $('#modes');
   modes.replaceChildren();
-  MODES.forEach(([id, label]) => {
-    const b = el('button', 'chip', label);
+  MODES.forEach(([id, name, ic]) => {
+    const b = el('button', 'chip');
+    b.innerHTML = icon(ic) + name;
     b.setAttribute('role', 'radio');
     b.setAttribute('aria-checked', t.mode === id);
     b.addEventListener('click', () => { t.mode = id; save(); });

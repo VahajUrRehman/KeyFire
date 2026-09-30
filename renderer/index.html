@@ -22,33 +22,25 @@
   </div>
   <div class="topRight">
     <span class="statusPill" id="pill" data-state="on"><i class="led"></i><span id="pillText">Active</span></span>
-    <button id="power" class="powerBtn" aria-pressed="true" aria-label="Pause sounds" title="Pause or resume">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v8"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0"/></svg>
+    <button id="power" class="powerBtn" aria-pressed="true" aria-label="Pause sounds" title="Pause or resume"><i class="ic" data-icon="power"></i>
     </button>
   </div>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="Sections">
-  <button class="tab" role="tab" id="t-play" data-tab="play" aria-controls="page-play" aria-selected="true">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></svg>Play
+  <button class="tab" role="tab" id="t-play" data-tab="play" aria-controls="page-play" aria-selected="true"><i class="ic" data-icon="zap"></i>Play
   </button>
-  <button class="tab" role="tab" id="t-sounds" data-tab="sounds" aria-controls="page-sounds" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></svg>Sounds
+  <button class="tab" role="tab" id="t-sounds" data-tab="sounds" aria-controls="page-sounds" aria-selected="false"><i class="ic" data-icon="keyboard"></i>Sounds
   </button>
-  <button class="tab" role="tab" id="t-atmosphere" data-tab="atmosphere" aria-controls="page-atmosphere" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 0 1-.6-7.96A5.5 5.5 0 0 1 17 9.5a4.25 4.25 0 0 1 0 8.5z"/></svg>Atmosphere
+  <button class="tab" role="tab" id="t-atmosphere" data-tab="atmosphere" aria-controls="page-atmosphere" aria-selected="false"><i class="ic" data-icon="cloud-rain"></i>Atmosphere
   </button>
-  <button class="tab" role="tab" id="t-focus" data-tab="focus" aria-controls="page-focus" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5M9 3h6"/></svg>Focus
+  <button class="tab" role="tab" id="t-focus" data-tab="focus" aria-controls="page-focus" aria-selected="false"><i class="ic" data-icon="timer"></i>Focus
   </button>
-  <button class="tab" role="tab" id="t-automation" data-tab="automation" aria-controls="page-automation" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Automation
+  <button class="tab" role="tab" id="t-automation" data-tab="automation" aria-controls="page-automation" aria-selected="false"><i class="ic" data-icon="calendar-clock"></i>Automation
   </button>
-  <button class="tab" role="tab" id="t-appearance" data-tab="appearance" aria-controls="page-appearance" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.8 0-1.6-1.2-1.7-1.2-3 0-1 .8-1.7 1.9-1.7H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7.5" r="1"/><circle cx="14.5" cy="7.5" r="1"/></svg>Appearance
+  <button class="tab" role="tab" id="t-appearance" data-tab="appearance" aria-controls="page-appearance" aria-selected="false"><i class="ic" data-icon="palette"></i>Appearance
   </button>
-  <button class="tab" role="tab" id="t-settings" data-tab="settings" aria-controls="page-settings" aria-selected="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Settings
+  <button class="tab" role="tab" id="t-settings" data-tab="settings" aria-controls="page-settings" aria-selected="false"><i class="ic" data-icon="settings"></i>Settings
   </button>
 </nav>
 
@@ -93,7 +85,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Mix</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="sliders-horizontal"></i>Mix</h3></div>
       <div class="sliders">
         <div class="ctl">
           <label for="vol">Volume</label><output id="volOut"></output>
@@ -115,8 +107,8 @@
 
     <div class="card">
       <div class="cardHead">
-        <h3>Scenes</h3>
-        <button class="pill" id="saveSceneBtn" aria-expanded="false">Save current mix</button>
+        <h3><i class="ic" data-icon="clapperboard"></i>Scenes</h3>
+        <button class="pill" id="saveSceneBtn" aria-expanded="false"><i class="ic" data-icon="sparkles"></i>Save current mix</button>
       </div>
       <form id="sceneForm" class="sceneForm" hidden>
         <input id="sceneName" type="text" maxlength="32" placeholder="Name this scene" aria-label="Scene name">
@@ -126,12 +118,12 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Try it</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="mouse-pointer-click"></i>Try it</h3></div>
       <textarea id="try" rows="2" placeholder="Type here to hear your sound"></textarea>
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Achievements</h3><span class="muted" id="achCount"></span></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="trophy"></i>Achievements</h3><span class="muted" id="achCount"></span></div>
       <div id="ach" class="chips"></div>
     </div>
   </section>
@@ -140,9 +132,9 @@
   <section class="page" id="page-sounds" role="tabpanel" aria-labelledby="t-sounds" hidden>
     <div class="card">
       <div class="cardHead">
-        <h3>Your sounds</h3>
+        <h3><i class="ic" data-icon="audio-lines"></i>Your sounds</h3>
         <div class="menuWrap">
-          <button class="pill solid" id="addBtn" aria-haspopup="true" aria-expanded="false">Add</button>
+          <button class="pill solid" id="addBtn" aria-haspopup="true" aria-expanded="false"><i class="ic" data-icon="plus"></i>Add</button>
           <div class="menu" id="menu" hidden>
             <button data-kind="zip">Keyboard pack (.zip)</button>
             <button data-kind="folder">Keyboard pack folder</button>
@@ -155,7 +147,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Tone</h3><span class="muted" id="toneFor"></span></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="audio-waveform"></i>Tone</h3><span class="muted" id="toneFor"></span></div>
       <p class="lead">Pick a profile, or shape the sound yourself. Each sound keeps its own settings.</p>
       <div id="toneProfiles" class="chips" role="radiogroup" aria-label="Tone profiles"></div>
       <p class="lead profNote" id="toneProfileNote"></p>
@@ -168,17 +160,17 @@
       </div>
       <div class="tryRow">
         <textarea id="toneTry" rows="2" placeholder="Type here to hear how it sounds"></textarea>
-        <button class="pill solid" id="toneSample">Play a sample</button>
+        <button class="pill solid" id="toneSample"><i class="ic" data-icon="play"></i>Play a sample</button>
       </div>
       <div class="cardFoot btnRow">
-        <button class="pill" id="toneCompare" aria-pressed="false" title="Switch between your tone and the original sound">Compare with original</button>
-        <button class="pill" id="toneReset">Reset tone</button>
+        <button class="pill" id="toneCompare" aria-pressed="false" title="Switch between your tone and the original sound"><i class="ic" data-icon="scale"></i>Compare with original</button>
+        <button class="pill" id="toneReset"><i class="ic" data-icon="rotate-ccw"></i>Reset tone</button>
       </div>
       <p class="lead tip">Tip: change one slider at a time, in small steps, and use Compare often. Louder sounds better at first, so cutting what bothers you beats boosting what you like.</p>
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Typing feel</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="gauge"></i>Typing feel</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Loudness follows typing speed</div><div class="rowDesc">Fast bursts can get softer or harder, like a real keyboard under your hands.</div></div>
         <select id="intMode" aria-label="Loudness follows typing speed">
@@ -191,7 +183,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Mouse and scroll</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="mouse"></i>Mouse and scroll</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Mouse clicks</div><div class="rowDesc">Left, right and middle clicks.</div></div>
         <label class="switch"><input type="checkbox" id="mouse" aria-label="Mouse clicks"><span></span></label>
@@ -213,7 +205,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Keyboard</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="keyboard"></i>Keyboard</h3></div>
       <p class="lead">Keys light up as you type. Click a key to give it a sound of its own.</p>
       <div id="osk" class="osk" aria-label="On-screen keyboard"></div>
       <div id="ovPanel" class="row" hidden>
@@ -227,8 +219,8 @@
   <section class="page" id="page-atmosphere" role="tabpanel" aria-labelledby="t-atmosphere" hidden>
     <div class="card">
       <div class="cardHead">
-        <h3>Ambience</h3>
-        <div class="chips"><button class="pill" id="addLayer">Add a layer</button><button class="pill" id="addAmb">Add your own</button></div>
+        <h3><i class="ic" data-icon="wind"></i>Ambience</h3>
+        <div class="chips"><button class="pill" id="addLayer"><i class="ic" data-icon="layers"></i>Add a layer</button><button class="pill" id="addAmb"><i class="ic" data-icon="plus"></i>Add your own</button></div>
       </div>
       <div id="amb" class="chips" role="radiogroup" aria-label="Ambience"></div>
       <div id="layers"></div>
@@ -239,7 +231,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Reactive ambience</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="activity"></i>Reactive ambience</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Follow my typing</div><div class="rowDesc">Fast typing brightens and swells the ambience. It relaxes when you stop.</div></div>
         <label class="switch"><input type="checkbox" id="reactOn" aria-label="Reactive ambience"><span></span></label>
@@ -261,8 +253,8 @@
 
     <div class="card">
       <div class="cardHead">
-        <h3>Music</h3>
-        <button class="pill" id="addMusic">Add tracks</button>
+        <h3><i class="ic" data-icon="music"></i>Music</h3>
+        <button class="pill" id="addMusic"><i class="ic" data-icon="plus"></i>Add tracks</button>
       </div>
       <div id="tracks" class="chips" role="radiogroup" aria-label="Music"></div>
       <div class="subhead">Sound profile</div>
@@ -276,13 +268,13 @@
         <div class="ctl"><label for="musicLevel">Level</label><output id="musicLevelOut"></output><span class="desc">Overall loudness of this profile.</span><input id="musicLevel" type="range" min="30" max="120" step="1"></div>
         <div class="ctl"><label for="musicDuckAmt">Step aside while typing</label><output id="musicDuckOut"></output><span class="desc">Music dips under your keys.</span><input id="musicDuckAmt" type="range" min="0" max="100" step="1"></div>
       </div>
-      <div class="cardFoot btnRow"><button class="pill" id="musicCompare" aria-pressed="false" title="Switch between your music profile and the original sound">Compare with original</button></div>
+      <div class="cardFoot btnRow"><button class="pill" id="musicCompare" aria-pressed="false" title="Switch between your music profile and the original sound"><i class="ic" data-icon="scale"></i>Compare with original</button></div>
       <div class="row">
         <div><div class="rowTitle" id="nowPlaying">Nothing playing</div><div class="rowDesc">Plays under your key sounds.</div></div>
         <div class="chips">
-          <button class="pill" id="musicToggle">Play</button>
-          <button class="pill" id="musicNext">Next</button>
-          <button class="pill" id="musicShuffle" aria-pressed="false">Shuffle</button>
+          <button class="pill" id="musicToggle"><i class="ic" data-icon="play"></i>Play</button>
+          <button class="pill" id="musicNext"><i class="ic" data-icon="skip-forward"></i>Next</button>
+          <button class="pill" id="musicShuffle" aria-pressed="false"><i class="ic" data-icon="shuffle"></i>Shuffle</button>
         </div>
       </div>
       <div class="ctl slim">
@@ -308,9 +300,9 @@
       </div>
       <div class="focusSide">
         <div class="focusBtns">
-          <button class="pill solid big" id="focusToggle">Start</button>
-          <button class="pill" id="focusSkip">Skip</button>
-          <button class="pill" id="focusReset">Reset</button>
+          <button class="pill solid big" id="focusToggle"><i class="ic" data-icon="play"></i>Start</button>
+          <button class="pill" id="focusSkip"><i class="ic" data-icon="skip-forward"></i>Skip</button>
+          <button class="pill" id="focusReset"><i class="ic" data-icon="rotate-ccw"></i>Reset</button>
         </div>
         <div class="tiles three">
           <div class="tile"><b id="focusToday">0</b><span>Sessions today</span></div>
@@ -321,7 +313,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Lengths</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="timer"></i>Lengths</h3></div>
       <div class="lengths">
         <label>Focus<span class="num"><input id="f-work" type="number" min="1" max="180"> min</span></label>
         <label>Short break<span class="num"><input id="f-short" type="number" min="1" max="180"> min</span></label>
@@ -331,7 +323,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Scenes</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="clapperboard"></i>Scenes</h3></div>
       <p class="lead">Switch the sound and ambience for each stretch. Reset returns you to the scene you started from.</p>
       <div class="row first"><div class="rowTitle">Focus</div><select id="f-workScene" aria-label="Scene for focus"></select></div>
       <div class="row"><div class="rowTitle">Short break</div><select id="f-shortScene" aria-label="Scene for short breaks"></select></div>
@@ -339,7 +331,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Behavior</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="sliders-horizontal"></i>Behavior</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Start the next stretch automatically</div></div>
         <label class="switch"><input type="checkbox" id="f-auto" aria-label="Start the next stretch automatically"><span></span></label>
@@ -358,17 +350,17 @@
   <!-- Automation -->
   <section class="page" id="page-automation" role="tabpanel" aria-labelledby="t-automation" hidden>
     <div class="card">
-      <div class="cardHead"><h3>Quiet hours</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="moon"></i>Quiet hours</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Mute on a schedule</div><div class="rowDesc">Everything goes quiet on the days and times you choose.</div></div>
         <label class="switch"><input type="checkbox" id="quietOn" aria-label="Quiet hours"><span></span></label>
       </div>
       <div id="quietRules"></div>
-      <div class="cardFoot"><button class="pill" id="quietAdd">Add a schedule</button></div>
+      <div class="cardFoot"><button class="pill" id="quietAdd"><i class="ic" data-icon="plus"></i>Add a schedule</button></div>
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Stay out of the way</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="bell-off"></i>Stay out of the way</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Mute during calls</div><div class="rowDesc">Mutes while any app is using your microphone.</div></div>
         <label class="switch"><input type="checkbox" id="muteCall" aria-label="Mute during calls"><span></span></label>
@@ -380,13 +372,13 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>App rules</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="app-window"></i>App rules</h3></div>
       <p class="lead">Mute a specific app, or switch to a scene while it is in front.</p>
       <div id="profiles"></div>
       <div class="addRule">
         <select id="profApp" aria-label="App"></select>
         <select id="profAct" aria-label="Action"></select>
-        <button class="pill solid" id="profAdd">Add rule</button>
+        <button class="pill solid" id="profAdd"><i class="ic" data-icon="plus"></i>Add rule</button>
       </div>
     </div>
   </section>
@@ -394,31 +386,31 @@
   <!-- Appearance -->
   <section class="page" id="page-appearance" role="tabpanel" aria-labelledby="t-appearance" hidden>
     <div class="card">
-      <div class="cardHead"><h3>Mode</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="monitor"></i>Mode</h3></div>
       <p class="lead">Light for bright rooms, dark for everything else, or follow Windows.</p>
       <div id="modes" class="chips" role="radiogroup" aria-label="Mode"></div>
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Accent color</h3><span class="hex" id="accentHex"></span></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="palette"></i>Accent color</h3><span class="hex" id="accentHex"></span></div>
       <p class="lead">Used for buttons, sliders and highlights. The last swatch opens a color picker.</p>
       <div id="accents" class="swatches" role="radiogroup" aria-label="Accent color"></div>
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Backgrounds</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="layers"></i>Backgrounds</h3></div>
       <div class="subhead">Dark</div>
       <div id="darkBgs" class="swatches" role="radiogroup" aria-label="Dark backgrounds"></div>
       <div class="subhead">Light</div>
       <div id="lightBgs" class="swatches" role="radiogroup" aria-label="Light backgrounds"></div>
-      <div class="cardFoot"><button class="pill" id="themeReset">Reset appearance</button></div>
+      <div class="cardFoot"><button class="pill" id="themeReset"><i class="ic" data-icon="rotate-ccw"></i>Reset appearance</button></div>
     </div>
   </section>
 
   <!-- Settings -->
   <section class="page" id="page-settings" role="tabpanel" aria-labelledby="t-settings" hidden>
     <div class="card">
-      <div class="cardHead"><h3>General</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="settings"></i>General</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Start with Windows</div><div class="rowDesc">Opens quietly in the tray at sign-in.</div></div>
         <label class="switch"><input type="checkbox" id="login" aria-label="Start with Windows"><span></span></label>
@@ -434,7 +426,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Typing</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="keyboard"></i>Typing</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Key release sounds</div><div class="rowDesc">Plays the lift sound when a keyboard pack has one.</div></div>
         <label class="switch"><input type="checkbox" id="release" aria-label="Key release sounds"><span></span></label>
@@ -446,7 +438,7 @@
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Audio output</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="headphones"></i>Audio output</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Output device</div><div class="rowDesc">Sounds, ambience and music all follow this.</div></div>
         <select id="outDev" aria-label="Output device"></select>
@@ -457,27 +449,27 @@
       </div>
       <div class="row">
         <div><div class="rowTitle">Test sound</div><div class="rowDesc">No sound here means the output device, not the keys.</div></div>
-        <button class="pill" id="testSound">Play</button>
+        <button class="pill" id="testSound"><i class="ic" data-icon="volume-2"></i>Play</button>
       </div>
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Library</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="folder"></i>Library</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Recorded shotgun kit</div><div class="rowDesc">Drop files named blast-, boom-, pump- or shell- here to replace the bundled recordings.</div></div>
-        <button class="pill" id="openKit">Open kit folder</button>
+        <button class="pill" id="openKit"><i class="ic" data-icon="folder-open"></i>Open kit folder</button>
       </div>
       <div class="row">
         <div><div class="rowTitle">Your files</div><div class="rowDesc">Packs, sounds, ambience and music live in the app data folder.</div></div>
-        <button class="pill" id="openFolder">Open folder</button>
+        <button class="pill" id="openFolder"><i class="ic" data-icon="folder-open"></i>Open folder</button>
       </div>
     </div>
 
     <div class="card">
-      <div class="cardHead"><h3>Health</h3></div>
+      <div class="cardHead"><h3><i class="ic" data-icon="heart-pulse"></i>Health</h3></div>
       <div class="row first">
         <div><div class="rowTitle">Key hook</div><div class="rowDesc" id="hHook">Checking</div></div>
-        <button class="pill" id="hookRestart">Restart</button>
+        <button class="pill" id="hookRestart"><i class="ic" data-icon="rotate-ccw"></i>Restart</button>
       </div>
       <div class="row">
         <div><div class="rowTitle">Audio</div><div class="rowDesc" id="hAudio">Checking</div></div>

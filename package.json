@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
+    "icons": "node tools/build-icons.js",
     "dist": "electron-builder --win"
   },
   "dependencies": {

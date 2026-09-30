@@ -1,5 +1,5 @@
 // Bootstrap: load state, bring the audio up, then start each tab's module.
-import { sk, engine, S, PACKS, AMBS, TRACKS, loaded, app, $, replace, render } from './ui/core.js';
+import { sk, engine, S, PACKS, AMBS, TRACKS, loaded, app, $, replace, render, hydrateIcons } from './ui/core.js';
 import { getPack, usePack, setAmb } from './ui/library.js';
 import { initTabs } from './ui/tabs.js';
 import { initPlay } from './ui/play.js';
@@ -15,6 +15,8 @@ import { initReactive } from './ui/reactive.js';
 import { initTone } from './ui/tone.js';
 import { initMouseScroll, preloadSlots } from './ui/mouse-scroll.js';
 import { initFocus } from './ui/focus.js';
+
+hydrateIcons();
 
 (async function init() {
   const st = await sk.getState();

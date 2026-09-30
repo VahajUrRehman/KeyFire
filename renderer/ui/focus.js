@@ -1,6 +1,6 @@
 // Focus tab: a pomodoro-style timer. Work, short break and long break can each switch the scene,
 // with a soft chime and a notification when a stretch ends. Finished sessions feed the totals.
-import { sk, engine, S, app, $, el, on } from './core.js';
+import { sk, engine, S, app, $, el, on, label } from './core.js';
 import { allScenes, applyScene } from './library.js';
 
 const LABEL = { work: 'Focus', short: 'Short break', long: 'Long break' };
@@ -95,7 +95,7 @@ function tick() {
 function renderFocus() {
   $('#focusPhase').textContent = LABEL[t.phase];
   $('#focusRound').textContent = `Session ${(t.cycle % S.focus.every) + 1} of ${S.focus.every}`;
-  $('#focusToggle').textContent = t.running ? 'Pause' : t.left < length(t.phase) ? 'Resume' : 'Start';
+  label($('#focusToggle'), t.running ? 'pause' : 'play', t.running ? 'Pause' : t.left < length(t.phase) ? 'Resume' : 'Start');
   $('#focusToggle').classList.toggle('solid', !t.running);
   $('#focusRing').closest('.ringWrap').dataset.phase = t.phase;
 

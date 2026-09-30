@@ -1,5 +1,5 @@
 // Atmosphere tab: the ambience bed, extra ambience layers, and music.
-import { sk, engine, S, AMBS, TRACKS, $, el, note, paint, ICON, bindSlider, bindRange, setRange, setSlider, replace, on, render } from './core.js';
+import { sk, engine, S, AMBS, TRACKS, $, el, note, paint, ICON, bindSlider, bindRange, setRange, setSlider, replace, on, render, label } from './core.js';
 import { MUSIC_PROFILES } from '../profiles.js';
 import { SYNTH_AMBIENCES, forgetAmbience, setAmb, touch } from './library.js';
 
@@ -129,7 +129,7 @@ function renderMusic() {
   $('#nowPlaying').textContent = S.music.track
     ? (S.music.playing ? 'Playing ' : 'Paused on ') + trackName(S.music.track)
     : (TRACKS.length ? 'Pick a track' : 'Add a track to start');
-  $('#musicToggle').textContent = S.music.playing ? 'Pause' : 'Play';
+  label($('#musicToggle'), S.music.playing ? 'pause' : 'play', S.music.playing ? 'Pause' : 'Play');
   $('#musicShuffle').setAttribute('aria-pressed', S.music.shuffle);
 }
 
@@ -148,7 +148,7 @@ let comparing = false;
 function setMusicCompare(on) {
   comparing = on;
   $('#musicCompare').setAttribute('aria-pressed', on);
-  $('#musicCompare').textContent = on ? 'Hearing the original' : 'Compare with original';
+  label($('#musicCompare'), 'scale', on ? 'Hearing the original' : 'Compare with original');
   engine.setMusicTone(on ? {} : S.music);
 }
 

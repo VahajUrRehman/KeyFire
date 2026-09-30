@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, dialog, nativeImage, shell, powerMonitor, protocol, net } = require('electron');
+const { app, BrowserWindow, Tray, Menu, ipcMain, dialog, nativeImage, shell, powerMonitor, protocol, net, screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { pathToFileURL } = require('url');
@@ -383,14 +383,21 @@ const startHidden = headless || process.argv.includes('--hidden');
 const soundpack = process.argv.find((a) => a.startsWith('--soundpack='));
 if (soundpack) settings.pack = soundpack.slice('--soundpack='.length);   // e.g. --soundpack=mech:cherrymx-blue-abs
 
+// The multi-size .ico gives Windows a sharp icon for the taskbar, Alt+Tab and the tray.
+const APP_ICON = path.join(__dirname, 'assets', process.platform === 'win32' ? 'icon.ico' : 'icon.png');
+
 function createWindow() {
+  // Fit the window inside the usable screen (display scaling can make a fixed 1000x760 taller than the screen).
+  const work = screen.getPrimaryDisplay().workAreaSize;
+  const width = Math.min(1000, work.width - 40);
+  const height = Math.min(760, work.height - 40);
   win = new BrowserWindow({
-    width: 1000, height: 760, minWidth: 820, minHeight: 600,
+    width, height, minWidth: Math.min(820, width), minHeight: Math.min(600, height),
     show: false,
     title: 'Keyfire',
     backgroundColor: settings.chrome.bg,
     autoHideMenuBar: true,
-    icon: path.join(__dirname, 'assets', 'icon.png'),
+    icon: APP_ICON,
     titleBarStyle: 'hidden',
     titleBarOverlay: { color: settings.chrome.bg, symbolColor: settings.chrome.ink, height: 56 },
     webPreferences: {
@@ -417,8 +424,7 @@ function showWindow() {
 }
 
 function buildTray() {
-  const icon = nativeImage.createFromPath(path.join(__dirname, 'assets', 'icon.png')).resize({ width: 20, height: 20 });
-  tray = new Tray(icon);
+  tray = new Tray(APP_ICON);
   tray.setToolTip('Keyfire');
   tray.on('click', showWindow);
   refreshTray();
@@ -588,6 +594,8 @@ if (!app.requestSingleInstanceLock()) {
   app.quit();
 } else {
   app.on('second-instance', showWindow);
+  // Must match build.appId: Windows uses it to group the taskbar button, pick its icon, and name notifications.
+  app.setAppUserModelId('com.vahaj.keyfire');
   app.whenReady().then(() => {
     protocol.handle('skmusic', async (req) => {
       const name = decodeURIComponent(new URL(req.url).pathname.slice(1));

@@ -35,3 +35,6 @@ The installer is written to `dist/`. Unsigned builds show a SmartScreen warning 
     renderer/packs.js  synth / your files / Mechvibes pack loading
     renderer/scenes.js built-in scenes
     renderer/app.js    UI logic
+
+## Credits
+- Icons: [Lucide](https://lucide.dev), ISC licence (`assets/LICENSE-lucide.txt`). To add one, put its name in `tools/build-icons.js` and run `npm run icons`.

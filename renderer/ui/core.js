@@ -1,5 +1,6 @@
 // Shared state, DOM helpers and a tiny event bus. Every UI module imports from here.
 import { Engine } from '../audio.js';
+import { ICONS } from '../icons.js';
 
 export const sk = window.sk;
 export const engine = new Engine();
@@ -73,13 +74,18 @@ export function bindSlider(id, out, onValue, persist) {
   s.addEventListener('change', persist);
 }
 
-const svg = (d, w = 16) =>
-  `<svg viewBox="0 0 24 24" width="${w}" height="${w}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+// Icons are Lucide (see tools/build-icons.js). In markup use <i class="ic" data-icon="zap"></i>;
+// in code use icon('zap') for the SVG string, or label(button, 'zap', 'Text') for an icon plus words.
+export const icon = (name) =>
+  `<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
-export const ICON = {
-  play: '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>',
-  trash: svg('<path d="M4 7h16M9.5 11v6M14.5 11v6M6 7l1 12.2A2 2 0 0 0 9 21h6a2 2 0 0 0 2-1.8L18 7M9 7V4h6v3"/>'),
-};
+export function hydrateIcons(root = document) {
+  root.querySelectorAll('[data-icon]').forEach((n) => { n.innerHTML = icon(n.dataset.icon); n.removeAttribute('data-icon'); });
+}
+
+export function label(btn, name, text) { btn.innerHTML = icon(name) + text; }
+
+export const ICON = { play: icon('play'), trash: icon('trash-2') };
 
 // ---------------------------------------------------------------------- bus
 // 'render' redraws everything; 'scenes' and 'power' redraw just those parts.

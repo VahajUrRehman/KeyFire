@@ -1,5 +1,5 @@
 // Sounds tab: tone (per sound) and typing feel (loudness follows typing speed).
-import { sk, engine, S, PACKS, app, $, el, bindRange, setRange, on } from './core.js';
+import { sk, engine, S, PACKS, app, $, el, bindRange, setRange, on, label } from './core.js';
 import { TONE_PROFILES, matchTone } from '../profiles.js';
 
 const DEFAULT_TONE = { bass: 0, presence: 0, treble: 0, pitch: 0, width: 100 };
@@ -21,7 +21,7 @@ let comparing = false;
 function setCompare(on) {
   comparing = on;
   $('#toneCompare').setAttribute('aria-pressed', on);
-  $('#toneCompare').textContent = on ? 'Hearing the original' : 'Compare with original';
+  label($('#toneCompare'), 'scale', on ? 'Hearing the original' : 'Compare with original');
   engine.setTone(on ? DEFAULT_TONE : S.tone[S.pack]);
 }
 
@@ -66,7 +66,7 @@ function renderTone() {
 export function initTone() {
   for (const [id, out, key, fmt] of FIELDS) {
     bindRange(id, out, fmt,
-      (v) => { comparing = false; $('#toneCompare').setAttribute('aria-pressed', false); $('#toneCompare').textContent = 'Compare with original'; S.tone[S.pack] = { ...current(), [key]: v }; engine.setTone(S.tone[S.pack]); },
+      (v) => { if (comparing) { comparing = false; $('#toneCompare').setAttribute('aria-pressed', false); label($('#toneCompare'), 'scale', 'Compare with original'); } S.tone[S.pack] = { ...current(), [key]: v }; engine.setTone(S.tone[S.pack]); },
       () => { sk.patch({ tone: S.tone }); renderProfiles(); });
   }
   $('#toneSample').addEventListener('click', playSample);
