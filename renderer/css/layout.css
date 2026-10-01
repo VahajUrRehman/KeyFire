@@ -144,3 +144,6 @@
 
 .btnRow{display:flex;gap:10px;flex-wrap:wrap}
 .lead.tip{margin:12px 0 0}
+
+/* why it is muted */
+.muteRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0 2px;padding:10px 14px;border:1px solid var(--amber);border-radius:12px;background:color-mix(in srgb, var(--amber) 12%, transparent);font-weight:600}

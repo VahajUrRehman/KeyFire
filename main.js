@@ -504,6 +504,7 @@ ipcMain.handle('music:remove', (_e, name) => {
   }
 });
 ipcMain.handle('context:get', () => ctx.state);
+ipcMain.handle('context:ignore', () => { ctx?.ignore(); return true; });
 ipcMain.handle('theme:chrome', (_e, c) => {
   const ok = (s) => typeof s === 'string' && /^#[0-9a-f]{6}$/i.test(s);
   if (!c || !ok(c.bg) || !ok(c.ink)) return false;

@@ -20,7 +20,15 @@ function renderPower() {
   $('#shell').classList.toggle('off', !S.enabled);
   $('#pill').dataset.state = state;
   $('#pillText').textContent = { on: 'Active', muted: 'Muted', off: 'Paused' }[state];
-  $('#status').textContent = !S.enabled ? 'Paused' : CTX.reason ? `Muted: ${CTX.reason}` : 'Firing on every key';
+  $('#status').textContent = !S.enabled ? 'Paused' : CTX.reason ? 'Muted' : 'Firing on every key';
+
+  // say why everything is silent, and offer a way out
+  const why = { 'quiet hours': CTX.until ? `Quiet hours, until ${CTX.until}` : 'Quiet hours', 'in a call': 'Your microphone is in use', 'fullscreen app': 'A fullscreen app is open' };
+  const name = (r) => why[r] || `${r} is in front`;
+  const row = $('#muteRow');
+  row.hidden = !(S.enabled && (CTX.reason || CTX.ignored));
+  $('#ignoreMute').hidden = !CTX.reason;
+  $('#muteText').textContent = CTX.reason ? `${name(CTX.reason)}. Keys, ambience and music are silent.` : CTX.raw ? `Playing anyway: ${name(CTX.raw)}.` : '';
 }
 
 function renderSliders() {
@@ -71,6 +79,7 @@ export function initPlay() {
     (v) => { S.reverb.mix = v; engine.setReverb(S.reverb); touch(); },
     () => sk.patch({ reverb: S.reverb }));
 
+  $('#ignoreMute').addEventListener('click', () => sk.ignoreMute());
   $('#power').addEventListener('click', () => {
     S.enabled = !S.enabled;
     renderPower();

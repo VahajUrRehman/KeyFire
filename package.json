@@ -26,6 +26,7 @@
   "build": {
     "appId": "com.vahaj.keyfire",
     "productName": "Keyfire",
+    "npmRebuild": false,
     "directories": {
       "output": "dist"
     },

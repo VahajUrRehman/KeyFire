@@ -22,6 +22,7 @@ contextBridge.exposeInMainWorld('sk', {
   onKeyUp: (cb) => ipcRenderer.on('keyup', (_e, code) => cb(code)),
   onScroll: (cb) => ipcRenderer.on('scroll', (_e, dir) => cb(dir)),
   onMouse: (cb) => ipcRenderer.on('mouse', (_e, button, down) => cb(button, down)),
+  ignoreMute: () => ipcRenderer.invoke('context:ignore'),
   getContext: () => ipcRenderer.invoke('context:get'),
   onContext: (cb) => ipcRenderer.on('context', (_e, c) => cb(c)),
   themeChrome: (c) => ipcRenderer.invoke('theme:chrome', c),
