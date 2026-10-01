@@ -108,7 +108,7 @@
 /* sliders in a flexible grid (tone, reactive) */
 .sliders.wrap{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
 .lead.foot{margin:12px 0 0}
-#reactBody.off{opacity:.45}
+#reactBody.off,#mfBody.off{opacity:.45}
 .meter{height:6px;border-radius:999px;background:rgb(var(--ink-rgb) / .12);overflow:hidden;margin:4px 0 14px}
 .meter i{display:block;height:100%;width:0;background:var(--brass);border-radius:999px;transition:width .08s linear}
 

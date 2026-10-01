@@ -184,7 +184,22 @@ export function restoreMusic() {
   if (S.music.playing) musicEl.play().catch(() => { S.music.playing = false; renderMusic(); });
 }
 
+// music that follows typing speed: the engine side lives in reactive.js's apply()
+const FOLLOW_SWITCHES = [['mfOn', 'on'], ['mfTempo', 'tempo'], ['mfBright', 'bright'], ['mfInvert', 'invert']];
+
+function renderFollow() {
+  const f = S.music.follow;
+  for (const [id, key] of FOLLOW_SWITCHES) $('#' + id).checked = f[key];
+  setSlider('mfAmount', 'mfAmountOut', f.amount);
+  $('#mfBody').classList.toggle('off', !f.on);
+  engine.setMusicFollow(0, f);
+}
+
 export function initAtmosphere() {
+  for (const [id, key] of FOLLOW_SWITCHES) {
+    $('#' + id).addEventListener('change', (e) => { S.music.follow[key] = e.target.checked; saveMusic(); renderFollow(); });
+  }
+  bindSlider('mfAmount', 'mfAmountOut', (v) => { S.music.follow.amount = v; engine.setMusicFollow(0, S.music.follow); }, saveMusic);
   bindSlider('ambVol', 'ambOut',
     (v) => { S.ambience.volume = v; setAmb(S.ambience.type, v); touch(); },
     () => sk.patch({ ambience: S.ambience }));
@@ -247,6 +262,7 @@ export function initAtmosphere() {
     renderLayers();
     renderMusic();
     renderMusicTone();
+    renderFollow();
     setSlider('ambVol', 'ambOut', S.ambience.volume);
     setSlider('musicVol', 'musicOut', S.music.volume);
   });

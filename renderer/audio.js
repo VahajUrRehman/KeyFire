@@ -254,8 +254,10 @@ export class Engine {
     this.mLow = eq('lowshelf', 180);
     this.mHigh = eq('highshelf', 7500);
     this.mSoft = eq('lowpass', 20000, 0.6);
-    this.mLow.connect(this.mHigh).connect(this.mSoft).connect(this.musicDuck);
+    this.mBright = eq('lowpass', 20000, 0.6);        // typing-speed brightness, separate from the profile's softness
+    this.mLow.connect(this.mHigh).connect(this.mSoft).connect(this.mBright).connect(this.musicDuck);
     this._mTrim = 1;
+    this._mFollow = 1;
     this._mDuck = 0;
     this.music = new Audio();
     this.music.crossOrigin = 'anonymous';
@@ -343,8 +345,23 @@ export class Engine {
     this._mixMusic();
   }
 
+  /**
+   * Music that follows typing speed. level 0..1 is how fast you type; f is S.music.follow. Fast typing
+   * makes the music louder (always), brighter and quicker (pitch kept); invert flips that. Off = neutral.
+   */
+  setMusicFollow(level, f) {
+    const on = f.on;
+    const e = !on ? 1 : f.invert ? 1 - level : level;
+    const a = f.amount;
+    this._mFollow = 1 - a * 0.9 * (1 - e);
+    const bright = f.bright ? 20000 * Math.pow(500 / 20000, (1 - e) * a) : 20000;
+    this.mBright.frequency.setTargetAtTime(bright, this.ctx.currentTime, 0.15);
+    this.music.playbackRate = on && f.tempo ? 1 + a * 0.25 * (2 * e - 1) : 1;
+    this._mixMusic();
+  }
+
   _mixMusic() {
-    this.musicDuck.gain.setTargetAtTime(this._mTrim * (1 - this._mDuck * 0.75), this.ctx.currentTime, 0.12);
+    this.musicDuck.gain.setTargetAtTime(this._mTrim * (1 - this._mDuck * 0.75) * this._mFollow, this.ctx.currentTime, 0.12);
   }
 
   setMusicVolume(v) { this.musicBus.gain.setTargetAtTime(v * 0.8, this.ctx.currentTime, 0.05); }

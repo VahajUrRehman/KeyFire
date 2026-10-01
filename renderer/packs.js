@@ -36,7 +36,7 @@ function keyPack(keymap, generic = [], up = new Map(), genericUp = []) {
   const all = generic.length ? generic : [...keymap.values()];
   return {
     jitter: 0,          // a keyboard pack plays the recording as it is, no pitch wobble
-    // key-release sound (Mechvibes v2 "-up" entries), or null when the pack has none
+    // key-release sound (V2 "-up" entries), or null when the pack has none
     release(code) {
       const b = up.get(code) || (genericUp.length ? pickRandom(genericUp) : null);
       return b && { buffer: b };

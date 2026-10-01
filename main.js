@@ -6,7 +6,7 @@ const extract = require('extract-zip');
 const { createContext } = require('./context');
 const { uIOhook, UiohookKey } = require('uiohook-napi');
 
-const F9 = 67; // uiohook key code, same code space Mechvibes packs use
+const F9 = 67; // uiohook key code, same code space keyboard packs use
 const AUDIO_EXT = ['.ogg', '.wav', '.mp3', '.flac', '.mpeg', '.mpg', '.mp4', '.m4a', '.aac', '.opus'];
 const AUDIO_DIALOG = AUDIO_EXT.map((e) => e.slice(1));
 
@@ -50,7 +50,8 @@ const DEFAULTS = {
   scene: 'range',
   reverb: { mix: 0.28, seconds: 1.6 },
   ambience: { type: 'wind', volume: 0.35 },
-  music: { volume: 0.5, track: null, playing: false, shuffle: false, profile: 'flat', bass: 0, treble: 0, soft: 0, space: 0, level: 1, duck: 0 },
+  music: { volume: 0.5, track: null, playing: false, shuffle: false, profile: 'flat', bass: 0, treble: 0, soft: 0, space: 0, level: 1, duck: 0,
+    follow: { on: false, tempo: true, bright: true, invert: false, amount: 0.8 } },   // music that follows typing speed
   customScenes: [],
   releaseSounds: true,
   fullAuto: true,
@@ -197,7 +198,7 @@ function packFolder(id) {
   return fs.existsSync(user) ? user : path.join(PACKS_BUNDLED, name);
 }
 
-// "GENERIC_R{0-4}.mp3" -> GENERIC_R0.mp3 ... GENERIC_R4.mp3 (Mechvibes v2 fallback sounds)
+// "GENERIC_R{0-4}.mp3" -> GENERIC_R0.mp3 ... GENERIC_R4.mp3 (V2 fallback sounds)
 function expandSound(pattern) {
   const m = /\{(\d+)-(\d+)\}/.exec(pattern);
   if (!m) return [pattern];

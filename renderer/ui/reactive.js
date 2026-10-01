@@ -1,7 +1,7 @@
 // Reactive ambience: typing speed drives the ambience. Faster typing brightens and swells the bed and
 // ducks it under the key sounds; it relaxes within about two seconds of stopping. Thunder can follow
 // Enter after a burst, or the end of a long one.
-import { engine, S, $, bindSlider, setSlider, on } from './core.js';
+import { sk, engine, S, $, bindSlider, setSlider, on } from './core.js';
 import { burstCount, setBurstHandler } from './stats.js';
 
 let level = 0;          // 0..1, how hard you are typing right now
@@ -14,6 +14,7 @@ function apply(now) {
   const r = S.reactive;
   engine.setReactive(r.on ? level : 0, r.on ? r.swell : 0, r.on ? r.duck : 0);
   engine.setMusicDuck(level * S.music.duck);       // the music profile's "step aside while typing"
+  engine.setMusicFollow(level, S.music.follow);
   lastApply = now;
 }
 
@@ -24,7 +25,7 @@ function thunder(now) {
 /** Called for every key press (the hot path: a few arithmetic ops and at most one apply per 50 ms). */
 export function feedReactive(now, code) {
   const r = S.reactive;
-  if (!r.on && !S.music.duck) return;              // nothing is listening to the typing level
+  if (!r.on && !S.music.duck && !S.music.follow.on) return;              // nothing is listening to the typing level
   const dt = now - lastKey;
   lastKey = now;
   rate = dt > 1500 ? 1 : rate + (1000 / Math.max(dt, 60) - rate) * 0.4;

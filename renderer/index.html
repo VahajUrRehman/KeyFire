@@ -272,6 +272,27 @@
         <div class="ctl"><label for="musicLevel">Level</label><output id="musicLevelOut"></output><span class="desc">Overall loudness of this profile.</span><input id="musicLevel" type="range" min="30" max="120" step="1"></div>
         <div class="ctl"><label for="musicDuckAmt">Step aside while typing</label><output id="musicDuckOut"></output><span class="desc">Music dips under your keys.</span><input id="musicDuckAmt" type="range" min="0" max="100" step="1"></div>
       </div>
+      <div class="row">
+        <div><div class="rowTitle">Follow my typing speed</div><div class="rowDesc">Volume rises and falls with how fast you type, up to your Music volume. Settles within a couple of seconds of stopping.</div></div>
+        <label class="switch"><input type="checkbox" id="mfOn" aria-label="Music follows typing speed"><span></span></label>
+      </div>
+      <div id="mfBody">
+        <div class="sliders wrap">
+          <div class="ctl"><label for="mfAmount">Amount</label><output id="mfAmountOut"></output><span class="desc">How far the music moves.</span><input id="mfAmount" type="range" min="0" max="100" step="1"></div>
+        </div>
+        <div class="row">
+          <div><div class="rowTitle">Tempo</div><div class="rowDesc">Faster as you speed up, pitch unchanged.</div></div>
+          <label class="switch"><input type="checkbox" id="mfTempo" aria-label="Follow with tempo"><span></span></label>
+        </div>
+        <div class="row">
+          <div><div class="rowTitle">Brightness</div><div class="rowDesc">Duller when slow, open when fast.</div></div>
+          <label class="switch"><input type="checkbox" id="mfBright" aria-label="Follow with brightness"><span></span></label>
+        </div>
+        <div class="row">
+          <div><div class="rowTitle">Reverse</div><div class="rowDesc">Calm music while you type fast, lively when you slow down.</div></div>
+          <label class="switch"><input type="checkbox" id="mfInvert" aria-label="Reverse the effect"><span></span></label>
+        </div>
+      </div>
       <div class="cardFoot btnRow"><button class="pill" id="musicCompare" aria-pressed="false" title="Switch between your music profile and the original sound"><i class="ic" data-icon="scale"></i>Compare with original</button></div>
       <div class="row">
         <div><div class="rowTitle" id="nowPlaying">Nothing playing</div><div class="rowDesc">Plays under your key sounds.</div></div>

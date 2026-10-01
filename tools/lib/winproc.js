@@ -36,7 +36,7 @@ function findRunningKeyfire() {
   const electronish = (p) => /^(Keyfire|electron)(\.exe)?$/i.test(p.Name);
   // Installed: named Keyfire. Dev copy: an electron process whose command line mentions the app. The main
   // process of a dev copy has no path in its command line, but its children do, so climb up to it.
-  const ours = all.filter((p) => /^Keyfire/i.test(p.Name) || (/^electron(\.exe)?$/i.test(p.Name) && /Keyfire|shotgun-keys/i.test(p.CommandLine || '')));
+  const ours = all.filter((p) => /^Keyfire/i.test(p.Name) || (/^electron(\.exe)?$/i.test(p.Name) && /Keyfire/i.test(p.CommandLine || '')));
   const roots = new Set();
   for (const p of ours) {
     let top = p;

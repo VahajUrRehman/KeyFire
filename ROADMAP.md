@@ -1,21 +1,21 @@
-# Roadmap: beat Mechvibes
+# Roadmap: beat the field
 
-Reference: original Mechvibes and MechvibesDX (keyboard + mouse, keydown/keyup, Ctrl+Alt+M mute, tray,
+Reference: other typing-sound apps (keyboard + mouse, keydown/keyup, Ctrl+Alt+M mute, tray,
 pack import, online library, web pack editor, themes/backgrounds/logo, ambience, output device picker,
 volume above 100%, `--headless`, latency trace).
 
 Legend: [x] done, [ ] to do.
 
-## Already done (ahead of Mechvibes)
+## Already done (ahead of the field)
 - [x] Scenes (sound + ambience + room in one click) and saved custom scenes
 - [x] Room reverb, per-key stereo panning, pitch/volume variation
 - [x] Ambience: synthesized + recorded beds, storm with random thunder, user loops (seamless, auto-levelled)
 - [x] Shotgun kit with per-key roles (pump on Enter, boom on Space, shell on Backspace)
-- [x] Mechvibes pack import (folder / zip / many at once), single + multi-file packs
+- [x] keyboard pack import (folder / zip / many at once), single + multi-file packs
 - [x] Tray, F9 pause, start with Windows, single-instance, installer config
 
 ## Phase 1: Reliability (trust)  <- start here
-- [x] Keep AudioContext alive/awake (no idle wake-up delay; Mechvibes users report 1-2 s after idle)
+- [x] Keep AudioContext alive/awake (no idle wake-up delay; users of other apps report 1-2 s after idle)
 - [x] Pre-warm on window show/focus and on first key after long idle
 - [x] Health panel: hook running, audio device OK, last-key latency (ms), voices in use
 - [x] Auto-restart the key hook if it stops; surface a clear error instead of silent failure
@@ -24,9 +24,9 @@ Legend: [x] done, [ ] to do.
 - [x] Handle device hot-plug (headphones) without going silent
 - Acceptance: key-to-sound under 20 ms in the trace; still instant after 30 min idle.
 
-## Phase 2: Parity with Mechvibes
+## Phase 2: Parity with the field
 - [x] Mouse sounds (press and release, left/right/middle) with a separate mouse pack slot
-- [x] Key-release sounds (Mechvibes v2 packs)
+- [x] Key-release sounds (V2 packs)
 - [x] Output device picker (ambience follows it)
 - [x] Volume boost above 100% (limiter already in place)
 - [x] Drag-and-drop pack import
@@ -56,12 +56,12 @@ Legend: [x] done, [ ] to do.
 - [ ] Unit tests for pack loading, settings migration, id validation
 - [ ] Name, logo, landing page  
 
-# Roadmap: a better product than Mechvibes (and the rest)
+# Roadmap: a better product than the alternatives (and the rest)
 
 Legend: [x] done, [ ] to do. Phases 1-4 are marked done as reported by the maintainer.
 
 ## Competitive picture (what we are measured against)
-- **Mechvibes / MechvibesDX:** keyboard + mouse, key-down/up, packs, online library, pack editor, themes.
+- **Other typing-sound apps:** keyboard + mouse, key-down/up, packs, online library, pack editor, themes.
 - **Keyboard Sounds Pro** (free, MIT): keyboard + mouse profiles, profile builder, pitch/pan/EQ effects,
   per-app rules, per-device volume up to 250%, hotkeys, on-screen shortcut popups for screen sharing.
 - **Thockly** (Windows, $4.99): press/release, trackpad/scroll sounds, tone + spatial tuning per profile,
@@ -119,7 +119,7 @@ Our lane: typing sound + ambience + room as one living "scene" that reacts to ho
 - [x] **Loudness follows typing intensity:** approximate Haptyk with inter-key interval (faster = softer
       or harder, user-selectable curve).
 - [ ] **Pack maker:** drop in one recording, slice it into per-key segments with waveform preview, audition
-      per key, export a Mechvibes V2 `.zip`.
+      per key, export a V2 `.zip`.
 - [ ] Import/export of full sound "profiles" (pack + tone + per-key overrides) as a shareable file.
 - Acceptance: every tone change is audible instantly (no glitch) and persists per pack.
 
@@ -138,8 +138,8 @@ Thockly advertises about 50 MB RAM and under 2% CPU; Electron starts heavier, so
 ## Phase 9: Ecosystem and growth
 - [ ] **Web demo:** static site that reuses `renderer/audio.js` so visitors can try scenes and packs in
       the browser before installing (Thockly does this). Our engine is already Web Audio, so this is cheap.
-- [ ] **In-app pack browser:** previews, one-click install, license shown per pack; Mechvibes-compatible.
-- [ ] **Auto-detect an existing Mechvibes install** and offer to import its packs.
+- [ ] **In-app pack browser:** previews, one-click install, license shown per pack; V2-format.
+- [ ] **Auto-detect an existing existing install** and offer to import its packs.
 - [ ] **Scene gallery:** curated first, community submissions later (moderation + license checks).
 - [ ] **AI sound packs:** describe a sound, generate a pack through an audio-generation API; cost cap,
       content filtering, clear licensing of generated output.
@@ -169,5 +169,5 @@ Thockly advertises about 50 MB RAM and under 2% CPU; Electron starts heavier, so
 1. Product name (affects installer id, deep links, domain).
 2. Pricing model (free core vs paid vs one-time).
 3. Whether to commit to a native audio core if Phase 8 budgets are missed.
-4. Audio licensing policy: bundle CC0 only (or properly credited); Mechvibes pack licenses vary, so do not
+4. Audio licensing policy: bundle CC0 only (or properly credited); keyboard pack licenses vary, so do not
    redistribute third-party packs without checking each one.      `````````
