@@ -1,23 +1,24 @@
-// Demo keyboard: flash key on real keypress, tiny synthesized click. No audio files.
+// Demo keyboard: flash key on real keypress and play real Cherry MX Blue (PBT) clips.
 const keys = {};
 document.querySelectorAll('.k').forEach(k => { keys[k.dataset.k || k.textContent.toLowerCase()] = k; });
-let ctx;
-function blip() {
-  try {
-    ctx = ctx || new AudioContext();
-    const t = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = 'square'; o.frequency.setValueAtTime(220 + Math.random() * 60, t);
-    o.frequency.exponentialRampToValueAtTime(50, t + .09);
-    g.gain.setValueAtTime(.12, t); g.gain.exponentialRampToValueAtTime(.001, t + .1);
-    o.connect(g).connect(ctx.destination); o.start(t); o.stop(t + .1);
-  } catch {}
+const letters = ['k0', 'k1', 'k2', 'k3', 'k4', 'k5', 'k6', 'k7'], bufs = {};
+const ctx = new AudioContext(); // starts suspended until first key/click
+[...letters, 'space', 'enter'].forEach(async n => {
+  try { bufs[n] = await ctx.decodeAudioData(await (await fetch(`audio/${n}.ogg`)).arrayBuffer()); } catch {}
+});
+function click(key) {
+  ctx.resume();
+  const b = bufs[key === ' ' ? 'space' : letters[key.charCodeAt(0) % letters.length]];
+  if (!b) return;
+  const s = ctx.createBufferSource(); s.buffer = b; s.playbackRate.value = .97 + Math.random() * .06;
+  s.connect(ctx.destination); s.start();
 }
-function flash(el) { el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 110); }
+function hit(key, el) { el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 110); click(key); }
 addEventListener('keydown', e => {
   if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
-  const el = keys[e.key === ' ' ? ' ' : e.key.toLowerCase()];
-  if (el) { flash(el); blip(); }
+  const k = e.key === ' ' ? ' ' : e.key.toLowerCase(), el = keys[k];
+  if (el) hit(k, el);
 });
 document.querySelector('.kb').addEventListener('pointerdown', e => {
-  const el = e.target.closest('.k'); if (el) { flash(el); blip(); }
+  const el = e.target.closest('.k'); if (el) hit(el.dataset.k || el.textContent.toLowerCase(), el);
 });
